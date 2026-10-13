@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
+import HomeCatalogo from './pages/HomeCatalogo'; // Importe a nova tela
 
 function App() {
   return (
@@ -7,7 +8,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        {/* Novas páginas entrarão aqui (ex: /cadastro, /dashboard) */}
+        <Route path="/dashboard" element={<HomeCatalogo />} /> {/* Nova rota adicionada */}
       </Routes>
     </BrowserRouter>
   );
