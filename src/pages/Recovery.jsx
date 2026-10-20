@@ -4,7 +4,7 @@ export default function Recovery() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(true);
+
 
   const validateEmail = (email) => {
     const regex = /\S+@\S+\.\S+/;
@@ -32,31 +32,7 @@ export default function Recovery() {
     <div className="min-h-screen w-full bg-[#f8f9fa] font-sans">
   <div className="relative flex flex-col min-h-screen w-full overflow-hidden">
         
-        {/* HEADER */}
-        <header className="bg-[#1f1f1f] text-white flex items-center justify-center p-4 relative h-14">
-          <button
-            aria-label="Menu"
-            className="absolute left-4 p-2 hover:bg-gray-800 rounded-full transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-          <h1 className="text-sm font-semibold tracking-widest">
-            KIDDOS
-          </h1>
-        </header>
+
 
         {/* ÁREA PRINCIPAL */}
         <main className="flex-1 flex flex-col items-center justify-center px-6 pb-32">
@@ -111,14 +87,7 @@ export default function Recovery() {
           </div>
         </main>
 
-       <footer className="w-full bg-[#f3f1ee] py-5 flex items-center justify-center gap-10">
-  <button className="bg-[#2196F3] hover:bg-[#1e88e5] text-white font-semibold text-sm py-3 px-12 rounded-xl transition-colors">
-    Crie sua conta
-  </button>
-  <button className="text-gray-800 font-medium text-sm hover:underline">
-    Entrar
-  </button>
-</footer>
+    
 
       </div>
     </div>
