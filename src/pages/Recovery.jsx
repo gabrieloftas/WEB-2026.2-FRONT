@@ -29,8 +29,8 @@ export default function Recovery() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-[#1a1a1a] font-sans m-0">
-      <div className="w-full max-w-sm bg-[#f8f9fa] h-[800px] rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col border-[8px] border-gray-900">
+    <div className="min-h-screen w-full bg-[#f8f9fa] font-sans">
+  <div className="relative flex flex-col min-h-screen w-full overflow-hidden">
         
         {/* HEADER */}
         <header className="bg-[#1f1f1f] text-white flex items-center justify-center p-4 relative h-14">
@@ -60,7 +60,7 @@ export default function Recovery() {
 
         {/* ÁREA PRINCIPAL */}
         <main className="flex-1 flex flex-col items-center justify-center px-6 pb-32">
-          <div className="bg-white w-full rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 flex flex-col gap-5">
+          <div className="bg-white w-full max-w-[440px] mx-auto rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 flex flex-col gap-5">
             <div className="text-center">
               <h2 className="text-[#1a1a1a] font-bold text-lg">
                 Esqueceu a chave secreta?
@@ -111,25 +111,14 @@ export default function Recovery() {
           </div>
         </main>
 
-        {/* BOTTOM SHEET */}
-        <div
-          className={`absolute bottom-0 w-full bg-white rounded-t-[32px] px-6 pb-8 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex flex-col gap-3 transition-transform duration-300 ease-in-out ${isSheetOpen ? 'translate-y-0' : 'translate-y-[85%]'}`}
-        >
-          {/* TOGGLE */}
-          <div className="w-full py-2 cursor-pointer" onClick={() => setIsSheetOpen(!isSheetOpen)}>
-            <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto"></div>
-          </div>
-
-          {/* CRIAR CONTA */}
-          <button className="w-full bg-[#007AFF] hover:bg-blue-600 text-white font-medium text-sm py-3.5 rounded-xl transition-colors flex justify-center items-center">
-            Crie sua conta
-          </button>
-
-          {/* ENTRAR */}
-          <button className="w-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 font-medium text-sm py-3.5 rounded-xl transition-colors flex justify-center items-center">
-            Entrar
-          </button>
-        </div>
+       <footer className="w-full bg-[#f3f1ee] py-5 flex items-center justify-center gap-10">
+  <button className="bg-[#2196F3] hover:bg-[#1e88e5] text-white font-semibold text-sm py-3 px-12 rounded-xl transition-colors">
+    Crie sua conta
+  </button>
+  <button className="text-gray-800 font-medium text-sm hover:underline">
+    Entrar
+  </button>
+</footer>
 
       </div>
     </div>
