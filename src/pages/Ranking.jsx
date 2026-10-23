@@ -48,51 +48,7 @@ export default function Ranking() {
     <div className="w-full min-h-screen bg-[#f8fbff] flex flex-col items-center">
       <div className="w-full max-w-[1440px] flex flex-col bg-[#f8fbff]">
 
-        {/* 1. NAVBAR REUTILIZÁVEL */}
-        <header className="w-full h-20 bg-white border-b border-[#ebe5df] px-6 md:px-10 flex items-center justify-between sticky top-0 z-50">
-          {/* Brand Logo */}
-          <Link to="/dashboard" className="flex items-center gap-2 no-underline">
-            <div className="w-8 h-8 flex items-center justify-center bg-[#facc15] rounded-xl shadow-sm">
-              <svg className="w-4 h-4 text-[#1e3a8a]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-              </svg>
-            </div>
-            <span className="font-outfit text-xl font-bold text-[#2a2927]">Kiddos</span>
-          </Link>
-
-          {/* Nav Links */}
-          <nav className="hidden md:flex items-center gap-8 font-outfit font-bold text-base">
-            <Link to="/dashboard" className="text-[#4a4742] hover:text-[#1d4ed8] no-underline transition-colors">Home</Link>
-            <Link to="/perfil" className="text-[#4a4742] hover:text-[#1d4ed8] no-underline transition-colors">Perfil</Link>
-            <Link to="/ranking" className="text-[#1d4ed8] no-underline">Ranking</Link>
-            <Link to="/configuracoes" className="text-[#4a4742] hover:text-[#1d4ed8] no-underline transition-colors">Configurações</Link>
-          </nav>
-
-          {/* Actions (Busca, Notificação, Perfil) */}
-          <div className="flex items-center gap-6">
-            <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-[#faf8f2] rounded-full w-64 border border-transparent focus-within:border-[#1d4ed8]">
-              <svg className="w-4 h-4 text-[#7d7b77]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input type="text" placeholder="Buscar jogos..." className="bg-transparent text-sm text-[#7d7b77] outline-none w-full" />
-            </div>
-
-            <div className="relative w-10 h-10 flex items-center justify-center bg-[#faf8f2] rounded-full cursor-pointer hover:bg-gray-200 transition-colors">
-              <svg className="w-5 h-5 text-[#2a2927]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-[#f25c5c] rounded-full ring-2 ring-white"></span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <img src="/images/avatarwrapper-23.png" alt="Léo Santos" className="w-10 h-10 rounded-full object-cover border border-[#ebe5df]" />
-              <div className="hidden sm:flex flex-col">
-                <span className="font-outfit font-bold text-sm text-[#2a2927]">Léo Santos</span>
-                <span className="font-figtree font-bold text-[11px] text-[#1d4ed8]">Nível 12 • Explorador</span>
-              </div>
-            </div>
-          </div>
-        </header>
+       
 
         {/* 2. CORPO PRINCIPAL DO RANKING */}
         <main className="flex flex-col items-center gap-10 px-6 lg:px-28 py-10 w-full">
