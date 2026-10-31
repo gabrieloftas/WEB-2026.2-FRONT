@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+/* ============ ÍCONES (SVG dentro do próprio arquivo) ============ */
 const svgBase = {
   fill: 'none',
   stroke: 'currentColor',
@@ -38,25 +39,6 @@ function SearchIcon({ className = 'w-4 h-4' }) {
   );
 }
 
-function UserXIcon({ className = 'w-6 h-6' }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...svgBase}>
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M17 8l5 5M22 8l-5 5" />
-    </svg>
-  );
-}
-
-function WarningIcon({ className = 'w-4 h-4' }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...svgBase}>
-      <path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
-      <path d="M12 9v4M12 17v.01" />
-    </svg>
-  );
-}
-
 /* ============ AVATAR: foto (se houver URL) ou iniciais do nome ============ */
 function iniciais(nome) {
   const partes = nome.trim().split(/\s+/);
@@ -91,7 +73,6 @@ const USUARIOS_INICIAIS = [
     cadastro: '20 Fev 2026',
     status: 'Ativo',
     partidas: 38,
-    pronome: 'Ele',
     cor: 'from-orange-300 to-orange-500',
   },
   {
@@ -102,7 +83,6 @@ const USUARIOS_INICIAIS = [
     cadastro: '18 Fev 2026',
     status: 'Ativo',
     partidas: 42,
-    pronome: 'Ela',
     cor: 'from-purple-300 to-purple-500',
   },
   {
@@ -124,12 +104,6 @@ export default function PainelUsuarios() {
   const [usuarios, setUsuarios] = useState(USUARIOS_INICIAIS);
   const [busca, setBusca] = useState('');
   const [filtroStatus, setFiltroStatus] = useState('Todos os Status');
-  const [usuarioParaDesativar, setUsuarioParaDesativar] = useState(null);
-
-  const confirmarDesativacao = () => {
-    alternarStatus(usuarioParaDesativar.id);
-    setUsuarioParaDesativar(null);
-  };
 
   const usuariosFiltrados = usuarios.filter((u) => {
     const texto = `${u.nome} ${u.email} ${u.nickname}`.toLowerCase();
@@ -271,7 +245,7 @@ export default function PainelUsuarios() {
                     <td className="px-5 py-3.5 text-[11px] text-gray-700">{u.partidas} jogos</td>
                     <td className="px-5 py-3.5 text-right">
                       <button
-                        onClick={() => (ativo ? setUsuarioParaDesativar(u) : alternarStatus(u.id))}
+                        onClick={() => alternarStatus(u.id)}
                         className={`text-[10px] font-semibold px-3 py-1.5 rounded-md border transition-colors ${
                           ativo
                             ? 'border-red-300 bg-red-50 text-red-500 hover:bg-red-100'
@@ -295,50 +269,6 @@ export default function PainelUsuarios() {
           </table>
         </div>
       </main>
-
-      {/* MODAL DE DESATIVAÇÃO */}
-      {usuarioParaDesativar && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl w-full max-w-md p-8 text-center shadow-2xl">
-            <div className="w-14 h-14 mx-auto rounded-full bg-red-50 text-red-400 flex items-center justify-center">
-              <UserXIcon className="w-6 h-6" />
-            </div>
-
-            <h2 className="mt-4 text-2xl font-extrabold text-[#1a1a1a]">Desativar este usuário?</h2>
-
-            <p className="mt-3 text-xs text-gray-500 leading-relaxed">
-              Você está prestes a desativar{' '}
-              <strong className="text-[#1a1a1a]">{usuarioParaDesativar.nome}</strong> (
-              {usuarioParaDesativar.email}).{' '}
-              {usuarioParaDesativar.pronome === 'Ela'
-                ? 'Ela não poderá entrar até ser reativada.'
-                : usuarioParaDesativar.pronome === 'Ele'
-                ? 'Ele não poderá entrar até ser reativado.'
-                : 'O acesso fica bloqueado até a reativação.'}
-            </p>
-
-            <div className="mt-5 flex items-center gap-2.5 rounded-xl bg-[#fff7dc] px-4 py-3 text-left text-[11px] text-gray-700">
-              <WarningIcon className="w-4 h-4 text-blue-700 shrink-0" />
-              O progresso e as pontuações serão preservados.
-            </div>
-
-            <div className="mt-5 flex gap-3">
-              <button
-                onClick={() => setUsuarioParaDesativar(null)}
-                className="flex-1 rounded-xl bg-[#f3f1ee] hover:bg-gray-200 py-3 text-xs font-bold text-[#1a1a1a] transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={confirmarDesativacao}
-                className="flex-1 rounded-xl bg-[#f25c5c] hover:bg-[#e04848] py-3 text-xs font-bold text-white shadow-sm transition-colors"
-              >
-                Confirmar desativação
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
