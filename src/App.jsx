@@ -9,11 +9,15 @@ import Ranking from './pages/Ranking';
 import Perfil from './pages/Perfil';
 import PartidaEmAndamento from './pages/PartidaEmAndamento';
 import PartidaConcluida from './pages/PartidaConcluida';
+import AdicionarJogo from './pages/AdicionarJogo'; // 👈 1. Importe a sua nova tela
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rota temporária exclusiva para teste (Sem Navbar) */}
+        <Route path="/teste-adicionar-jogo" element={<AdicionarJogo />} /> {/* 👈 2. Adicione esta linha */}
+
         {/* Rotas SEM a Navbar */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />

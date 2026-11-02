@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
 import bannerImage from '../assets/images/bannerimage-36.png'
 import gameThumb1 from '../assets/images/gamethumbnail-68.png'
 import gameThumb2 from '../assets/images/gamethumbnail-93.png'
@@ -11,11 +13,26 @@ import miniThumb1 from '../assets/images/minithumb-248.png'
 import miniThumb2 from '../assets/images/minithumb-255.png'
 
 function HomeCatalogo() {
+
+  const [searchParams] = useSearchParams()
+
+  // Pega o texto digitado na Navbar
+  const busca = searchParams.get('busca') || ''
+
+  // Categoria selecionada
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
+
+
+  // =========================
+  // LISTA DE JOGOS
+  // =========================
+
   const jogosRecomendados = [
     {
       id: 1,
       titulo: 'Soma Frenética',
-      descricao: 'Estoure bolhas com os números corretos para resolver somas matemáticas dinâmicas!',
+      descricao:
+        'Estoure bolhas com os números corretos para resolver somas matemáticas dinâmicas!',
       tempo: '10 min',
       imagem: gameThumb1,
       tags: ['Mais Jogado', 'Matemática'],
@@ -23,7 +40,8 @@ function HomeCatalogo() {
     {
       id: 2,
       titulo: 'Detetive das Palavras',
-      descricao: 'Encontre as letras escondidas no cenário para preencher as lacunas e desvendar o mistério.',
+      descricao:
+        'Encontre as letras escondidas no cenário para preencher as lacunas e desvendar o mistério.',
       tempo: '15 min',
       imagem: gameThumb2,
       tags: ['Recomendado', 'Português'],
@@ -31,7 +49,8 @@ function HomeCatalogo() {
     {
       id: 3,
       titulo: 'O Reino dos Átomos',
-      descricao: 'Combine elementos da tabela periódica para criar reações mágicas e defender o reino científico.',
+      descricao:
+        'Combine elementos da tabela periódica para criar reações mágicas e defender o reino científico.',
       tempo: '12 min',
       imagem: gameThumb3,
       tags: ['Novo!', 'Ciências'],
@@ -39,7 +58,8 @@ function HomeCatalogo() {
     {
       id: 4,
       titulo: 'Cavaleiro do Código',
-      descricao: 'Escreva sequências lógicas com blocos visuais para guiar o pequeno cavaleiro até o castelo.',
+      descricao:
+        'Escreva sequências lógicas com blocos visuais para guiar o pequeno cavaleiro até o castelo.',
       tempo: '20 min',
       imagem: gameThumb4,
       tags: ['Lógica'],
@@ -47,7 +67,8 @@ function HomeCatalogo() {
     {
       id: 5,
       titulo: 'Super Memória Animal',
-      descricao: 'Encontre os pares corretos de animais raros antes que o tempo acabe e aprenda curiosidades!',
+      descricao:
+        'Encontre os pares corretos de animais raros antes que o tempo acabe e aprenda curiosidades!',
       tempo: '8 min',
       imagem: gameThumb5,
       tags: ['Lógica'],
@@ -55,172 +76,609 @@ function HomeCatalogo() {
     {
       id: 6,
       titulo: 'Ecos do Passado',
-      descricao: 'Explore ruínas antigas respondendo perguntas sobre história global e arqueologia.',
+      descricao:
+        'Explore ruínas antigas respondendo perguntas sobre história global e arqueologia.',
       tempo: '25 min',
       imagem: gameThumb6,
       tags: ['Novo!', 'Ciências'],
     },
   ]
 
+
+  // =========================
+  // FILTRO DOS JOGOS
+  // =========================
+
+  const jogosFiltrados = jogosRecomendados.filter((jogo) => {
+
+    // Busca pelo nome do jogo
+    const nomeCorresponde = jogo.titulo
+      .toLowerCase()
+      .includes(busca.toLowerCase())
+
+
+    // Busca pela categoria
+    const categoriaCorresponde =
+      categoriaSelecionada === '' ||
+      jogo.tags.includes(categoriaSelecionada)
+
+
+    // Os dois precisam corresponder
+    return nomeCorresponde && categoriaCorresponde
+  })
+
+
+  // =========================
+  // FUNÇÃO DO FILTRO
+  // =========================
+
+  function selecionarCategoria(categoria) {
+
+    // Se clicar novamente na categoria,
+    // remove o filtro
+    if (categoriaSelecionada === categoria) {
+      setCategoriaSelecionada('')
+    } else {
+      setCategoriaSelecionada(categoria)
+    }
+  }
+
+
   return (
+
     <div className="w-full min-h-screen bg-[#f8fbff] flex flex-col items-center">
+
       {/* Corpo Principal */}
+
       <main className="w-full max-w-[1440px] px-6 md:px-10 py-10 flex flex-col lg:flex-row gap-8 items-start">
-        
-        {/* Conteúdo Esquerdo / Central */}
+
+
+        {/* =========================
+            CONTEÚDO PRINCIPAL
+        ========================= */}
+
         <div className="flex-1 w-full flex flex-col gap-10">
-          
-          {/* Banner de Desafio da Semana */}
+
+
+          {/* =========================
+              BANNER
+          ========================= */}
+
           <section className="bg-gradient-to-r from-[#3b82f6] to-[#60a5fa] rounded-[28px] p-8 text-white flex flex-col lg:flex-row items-center justify-between gap-6 shadow-md">
+
             <div className="flex flex-col gap-3 max-w-lg">
+
               <div className="bg-[#2a2927] text-[#ffc83b] text-xs font-bold px-3 py-1.5 rounded-xl self-start tracking-wide">
                 DESAFIO DA SEMANA
               </div>
-              <h1 className="text-3xl font-bold font-outfit">Labirinto Matemático: Alge-Maze!</h1>
+
+              <h1 className="text-3xl font-bold font-outfit">
+                Labirinto Matemático: Alge-Maze!
+              </h1>
+
               <p className="text-sm opacity-90 leading-relaxed font-figtree">
-                Resolva problemas de álgebra rápida para achar a saída do calabouço e ganhe 2x XP!
+                Resolva problemas de álgebra rápida para achar a saída do
+                calabouço e ganhe 2x XP!
               </p>
+
             </div>
+
+
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              <img src={bannerImage} alt="Baú do Tesouro" className="w-60 rounded-2xl shadow-lg object-cover" />
+
+              <img
+                src={bannerImage}
+                alt="Baú do Tesouro"
+                className="w-60 rounded-2xl shadow-lg object-cover"
+              />
+
               <button className="bg-[#f25c5c] hover:bg-[#e04848] text-white font-bold px-6 py-3.5 rounded-2xl shadow-[0_4px_0_0_rgba(0,0,0,0.3)] transition active:translate-y-0.5 cursor-pointer">
                 Jogar Agora
               </button>
+
             </div>
+
           </section>
 
-          {/* Categorias de Aprendizado */}
+
+          {/* =========================
+              CATEGORIAS
+          ========================= */}
+
           <section className="flex flex-col gap-5">
-            <h2 className="text-2xl font-bold text-[#2a2927] font-outfit">Categorias de Aprendizado</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="flex items-center gap-3 p-4 bg-[#ff9494]/20 border-2 border-[#b00000] rounded-2xl cursor-pointer hover:bg-[#ff9494]/30 transition">
-                <div className="w-10 h-10 bg-[#facc15] rounded-xl flex items-center justify-center font-bold text-[#1e3a8a]">+</div>
-                <span className="font-bold text-[#2a2927] font-outfit">Matemática</span>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-gray-200 border-2 border-black rounded-2xl cursor-pointer hover:bg-gray-300 transition">
-                <div className="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-bold">🧩</div>
-                <span className="font-bold text-[#2a2927] font-outfit">Lógica</span>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-[#ebf5ff] border-2 border-[#2563eb] rounded-2xl cursor-pointer hover:bg-[#dbeafe] transition">
-                <div className="w-10 h-10 bg-[#2563eb] text-white rounded-xl flex items-center justify-center font-bold">📖</div>
-                <span className="font-bold text-[#2a2927] font-outfit">Português</span>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-[#e8faf2] border-2 border-[#41cd93] rounded-2xl cursor-pointer hover:bg-[#d1fae5] transition">
-                <div className="w-10 h-10 bg-[#41cd93] text-white rounded-xl flex items-center justify-center font-bold">🧪</div>
-                <span className="font-bold text-[#2a2927] font-outfit">Ciências</span>
-              </div>
-            </div>
-          </section>
 
-          {/* Seus Jogos Recomendados */}
-          <section className="flex flex-col gap-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-[#2a2927] font-outfit">Seus Jogos Recomendados</h2>
-              <a href="#" className="text-sm font-bold text-[#1d4ed8] hover:underline font-outfit">Ver todos os jogos →</a>
+
+              <h2 className="text-2xl font-bold text-[#2a2927] font-outfit">
+                Categorias de Aprendizado
+              </h2>
+
+
+              {categoriaSelecionada !== '' && (
+
+                <button
+                  onClick={() => setCategoriaSelecionada('')}
+                  className="text-sm font-bold text-[#1d4ed8] hover:underline cursor-pointer"
+                >
+                  Limpar filtro
+                </button>
+
+              )}
+
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {jogosRecomendados.map((jogo) => (
-                <div key={jogo.id} className="bg-white border border-[#ebe5df] rounded-[24px] overflow-hidden shadow-md flex flex-col justify-between hover:shadow-xl transition">
-                  <div>
-                    <div className="relative">
-                      <img src={jogo.imagem} alt={jogo.titulo} className="w-full h-44 object-cover" />
-                      <div className="absolute top-3 left-3 flex gap-1.5">
-                        {jogo.tags.map((tag, idx) => (
-                          <span key={idx} className="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-md font-figtree">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="p-5 flex flex-col gap-3">
-                      <div className="flex justify-between items-center">
-                        <div className="flex text-[#ffc83b] text-sm">★★★★★</div>
-                        <div className="flex items-center gap-1 text-xs text-[#7d7b77] font-figtree">
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                          <span>{jogo.tempo}</span>
-                        </div>
-                      </div>
-                      <h3 className="text-lg font-bold text-[#2a2927] font-outfit">{jogo.titulo}</h3>
-                      <p className="text-xs text-[#7d7b77] leading-relaxed font-figtree">{jogo.descricao}</p>
-                    </div>
-                  </div>
-                  <div className="px-5 pb-5 pt-3 border-t border-[#ebe5df] flex justify-between items-center">
-                    <button className="text-sm font-bold text-[#1d4ed8] hover:underline font-outfit cursor-pointer">Jogar Agora</button>
-                    <span className="text-[#1d4ed8] font-bold">→</span>
-                  </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+
+
+              {/* MATEMÁTICA */}
+
+              <button
+                onClick={() => selecionarCategoria('Matemática')}
+                className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition text-left
+                  ${
+                    categoriaSelecionada === 'Matemática'
+                      ? 'bg-[#ff9494]/40 border-[#b00000] scale-[1.02]'
+                      : 'bg-[#ff9494]/20 border-[#b00000] hover:bg-[#ff9494]/30'
+                  }`}
+              >
+
+                <div className="w-10 h-10 bg-[#facc15] rounded-xl flex items-center justify-center font-bold text-[#1e3a8a]">
+                  +
                 </div>
-              ))}
+
+                <span className="font-bold text-[#2a2927] font-outfit">
+                  Matemática
+                </span>
+
+              </button>
+
+
+              {/* LÓGICA */}
+
+              <button
+                onClick={() => selecionarCategoria('Lógica')}
+                className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition text-left
+                  ${
+                    categoriaSelecionada === 'Lógica'
+                      ? 'bg-gray-300 border-black scale-[1.02]'
+                      : 'bg-gray-200 border-black hover:bg-gray-300'
+                  }`}
+              >
+
+                <div className="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-bold">
+                  🧩
+                </div>
+
+                <span className="font-bold text-[#2a2927] font-outfit">
+                  Lógica
+                </span>
+
+              </button>
+
+
+              {/* PORTUGUÊS */}
+
+              <button
+                onClick={() => selecionarCategoria('Português')}
+                className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition text-left
+                  ${
+                    categoriaSelecionada === 'Português'
+                      ? 'bg-[#dbeafe] border-[#2563eb] scale-[1.02]'
+                      : 'bg-[#ebf5ff] border-[#2563eb] hover:bg-[#dbeafe]'
+                  }`}
+              >
+
+                <div className="w-10 h-10 bg-[#2563eb] text-white rounded-xl flex items-center justify-center font-bold">
+                  📖
+                </div>
+
+                <span className="font-bold text-[#2a2927] font-outfit">
+                  Português
+                </span>
+
+              </button>
+
+
+              {/* CIÊNCIAS */}
+
+              <button
+                onClick={() => selecionarCategoria('Ciências')}
+                className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition text-left
+                  ${
+                    categoriaSelecionada === 'Ciências'
+                      ? 'bg-[#d1fae5] border-[#41cd93] scale-[1.02]'
+                      : 'bg-[#e8faf2] border-[#41cd93] hover:bg-[#d1fae5]'
+                  }`}
+              >
+
+                <div className="w-10 h-10 bg-[#41cd93] text-white rounded-xl flex items-center justify-center font-bold">
+                  🧪
+                </div>
+
+                <span className="font-bold text-[#2a2927] font-outfit">
+                  Ciências
+                </span>
+
+              </button>
+
+
             </div>
+
           </section>
+
+
+          {/* =========================
+              JOGOS RECOMENDADOS
+          ========================= */}
+
+          <section className="flex flex-col gap-6">
+
+
+            <div className="flex justify-between items-center">
+
+              <div>
+
+                <h2 className="text-2xl font-bold text-[#2a2927] font-outfit">
+
+                  {busca !== ''
+                    ? `Resultados para "${busca}"`
+                    : categoriaSelecionada !== ''
+                    ? `Jogos de ${categoriaSelecionada}`
+                    : 'Seus Jogos Recomendados'}
+
+                </h2>
+
+
+                {(busca !== '' || categoriaSelecionada !== '') && (
+
+                  <p className="text-sm text-[#7d7b77] font-figtree mt-1">
+                    {jogosFiltrados.length} jogo(s) encontrado(s)
+                  </p>
+
+                )}
+
+              </div>
+
+
+              <a
+                href="#"
+                className="text-sm font-bold text-[#1d4ed8] hover:underline font-outfit"
+              >
+                Ver todos os jogos →
+              </a>
+
+            </div>
+
+
+            {/* =========================
+                LISTA DE JOGOS
+            ========================= */}
+
+            {jogosFiltrados.length > 0 ? (
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                {jogosFiltrados.map((jogo) => (
+
+                  <div
+                    key={jogo.id}
+                    className="bg-white border border-[#ebe5df] rounded-[24px] overflow-hidden shadow-md flex flex-col justify-between hover:shadow-xl transition"
+                  >
+
+                    <div>
+
+                      <div className="relative">
+
+                        <img
+                          src={jogo.imagem}
+                          alt={jogo.titulo}
+                          className="w-full h-44 object-cover"
+                        />
+
+
+                        <div className="absolute top-3 left-3 flex gap-1.5">
+
+                          {jogo.tags.map((tag, idx) => (
+
+                            <span
+                              key={idx}
+                              className="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-md font-figtree"
+                            >
+                              {tag}
+                            </span>
+
+                          ))}
+
+                        </div>
+
+                      </div>
+
+
+                      <div className="p-5 flex flex-col gap-3">
+
+                        <div className="flex justify-between items-center">
+
+                          <div className="flex text-[#ffc83b] text-sm">
+                            ★★★★★
+                          </div>
+
+
+                          <div className="flex items-center gap-1 text-xs text-[#7d7b77] font-figtree">
+
+                            <svg
+                              className="w-3.5 h-3.5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+
+                            <span>{jogo.tempo}</span>
+
+                          </div>
+
+                        </div>
+
+
+                        <h3 className="text-lg font-bold text-[#2a2927] font-outfit">
+                          {jogo.titulo}
+                        </h3>
+
+
+                        <p className="text-xs text-[#7d7b77] leading-relaxed font-figtree">
+                          {jogo.descricao}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    <div className="px-5 pb-5 pt-3 border-t border-[#ebe5df] flex justify-between items-center">
+
+                      <button className="text-sm font-bold text-[#1d4ed8] hover:underline font-outfit cursor-pointer">
+                        Jogar Agora
+                      </button>
+
+                      <span className="text-[#1d4ed8] font-bold">
+                        →
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            ) : (
+
+              /* =========================
+                  NENHUM JOGO ENCONTRADO
+              ========================= */
+
+              <div className="bg-white border border-[#ebe5df] rounded-[24px] p-10 text-center">
+
+                <div className="text-4xl mb-4">
+                  🎮
+                </div>
+
+                <h3 className="text-xl font-bold text-[#2a2927] font-outfit">
+                  Nenhum jogo encontrado
+                </h3>
+
+                <p className="text-sm text-[#7d7b77] font-figtree mt-2">
+
+                  Não encontramos jogos correspondentes à sua busca.
+
+                </p>
+
+
+                <button
+                  onClick={() => setCategoriaSelecionada('')}
+                  className="mt-5 text-sm font-bold text-[#1d4ed8] hover:underline cursor-pointer"
+                >
+                  Limpar filtros
+                </button>
+
+              </div>
+
+            )}
+
+          </section>
+
 
         </div>
 
-        {/* Barra Lateral Direita (Sidebar Dashboard) */}
+
+        {/* =========================
+            SIDEBAR
+        ========================= */}
+
         <aside className="w-full lg:w-80 bg-white border border-[#ebe5df] rounded-[28px] p-6 shadow-lg flex flex-col gap-8 shrink-0">
-          {/* Perfil Header */}
+
+
+          {/* PERFIL */}
+
           <div className="flex flex-col items-center text-center gap-3">
-            <img src={profileAvatar} alt="Léo Santos" className="w-20 h-20 rounded-full border-4 border-[#ffc83b] object-cover shadow-sm" />
+
+            <img
+              src={profileAvatar}
+              alt="Léo Santos"
+              className="w-20 h-20 rounded-full border-4 border-[#ffc83b] object-cover shadow-sm"
+            />
+
+
             <div>
-              <h3 className="text-lg font-bold text-[#2a2927] font-outfit">Léo Santos</h3>
-              <p className="text-xs text-[#7d7b77] font-figtree">@leo_explorador</p>
+
+              <h3 className="text-lg font-bold text-[#2a2927] font-outfit">
+                Léo Santos
+              </h3>
+
+              <p className="text-xs text-[#7d7b77] font-figtree">
+                @leo_explorador
+              </p>
+
             </div>
+
 
             <div className="w-full flex flex-col gap-1.5 mt-2 bg-[#faf8f2] p-3 rounded-2xl">
+
               <div className="flex justify-between text-xs font-bold font-figtree">
-                <span className="text-[#1d4ed8]">XP • Nível 12</span>
-                <span className="text-[#7d7b77]">4.800 / 6.000 XP</span>
+
+                <span className="text-[#1d4ed8]">
+                  XP • Nível 12
+                </span>
+
+                <span className="text-[#7d7b77]">
+                  4.800 / 6.000 XP
+                </span>
+
               </div>
+
+
               <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+
                 <div className="bg-[#facc15] h-full w-[80%] rounded-full"></div>
+
               </div>
+
             </div>
+
           </div>
 
-          {/* Medalhas Recentes */}
+
+          {/* MEDALHAS */}
+
           <div className="flex flex-col gap-4">
-            <h4 className="text-sm font-bold text-[#2a2927] font-outfit">Medalhas Recentes</h4>
+
+            <h4 className="text-sm font-bold text-[#2a2927] font-outfit">
+              Medalhas Recentes
+            </h4>
+
+
             <div className="grid grid-cols-3 gap-3">
+
+
               <div className="bg-[#faf8f2] p-3 rounded-2xl flex flex-col items-center text-center gap-1.5 border border-[#ebe5df]">
+
                 <div className="text-xl">🏆</div>
-                <span className="text-[11px] font-bold text-[#2a2927] font-outfit">Mestre Soma</span>
+
+                <span className="text-[11px] font-bold text-[#2a2927] font-outfit">
+                  Mestre Soma
+                </span>
+
               </div>
+
+
               <div className="bg-[#faf8f2] p-3 rounded-2xl flex flex-col items-center text-center gap-1.5 border border-[#ebe5df]">
+
                 <div className="text-xl">🧠</div>
-                <span className="text-[11px] font-bold text-[#2a2927] font-outfit">Pense Rápido</span>
+
+                <span className="text-[11px] font-bold text-[#2a2927] font-outfit">
+                  Pense Rápido
+                </span>
+
               </div>
+
+
               <div className="bg-[#faf8f2] p-3 rounded-2xl flex flex-col items-center text-center gap-1.5 border border-[#ebe5df]">
+
                 <div className="text-xl">⚛️</div>
-                <span className="text-[11px] font-bold text-[#2a2927] font-outfit">Cientista</span>
+
+                <span className="text-[11px] font-bold text-[#2a2927] font-outfit">
+                  Cientista
+                </span>
+
               </div>
+
+
             </div>
+
           </div>
 
-          {/* Continue Jogando */}
+
+          {/* CONTINUE JOGANDO */}
+
           <div className="flex flex-col gap-4">
-            <h4 className="text-sm font-bold text-[#2a2927] font-outfit">Continue Jogando</h4>
-            
-            <div className="flex items-center gap-3 p-2 bg-[#faf8f2] rounded-2xl border border-[#ebe5df] cursor-pointer hover:bg-gray-100 transition">
-              <img src={miniThumb1} alt="Miniatura" className="w-12 h-12 rounded-xl object-cover" />
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-[#2a2927] truncate font-outfit">Cavaleiro do Código</p>
-                <p className="text-[10px] text-[#7d7b77] font-figtree">Última vez há 2 horas</p>
-              </div>
-              <span className="text-[#1d4ed8] font-bold pr-2">›</span>
-            </div>
+
+            <h4 className="text-sm font-bold text-[#2a2927] font-outfit">
+              Continue Jogando
+            </h4>
+
 
             <div className="flex items-center gap-3 p-2 bg-[#faf8f2] rounded-2xl border border-[#ebe5df] cursor-pointer hover:bg-gray-100 transition">
-              <img src={miniThumb2} alt="Miniatura" className="w-12 h-12 rounded-xl object-cover" />
+
+              <img
+                src={miniThumb1}
+                alt="Cavaleiro do Código"
+                className="w-12 h-12 rounded-xl object-cover"
+              />
+
+
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-[#2a2927] truncate font-outfit">Soma Frenética</p>
-                <p className="text-[10px] text-[#7d7b77] font-figtree">Última vez ontem</p>
+
+                <p className="text-xs font-bold text-[#2a2927] truncate font-outfit">
+                  Cavaleiro do Código
+                </p>
+
+                <p className="text-[10px] text-[#7d7b77] font-figtree">
+                  Última vez há 2 horas
+                </p>
+
               </div>
-              <span className="text-[#1d4ed8] font-bold pr-2">›</span>
+
+              <span className="text-[#1d4ed8] font-bold pr-2">
+                ›
+              </span>
+
             </div>
+
+
+            <div className="flex items-center gap-3 p-2 bg-[#faf8f2] rounded-2xl border border-[#ebe5df] cursor-pointer hover:bg-gray-100 transition">
+
+              <img
+                src={miniThumb2}
+                alt="Soma Frenética"
+                className="w-12 h-12 rounded-xl object-cover"
+              />
+
+
+              <div className="flex-1 min-w-0">
+
+                <p className="text-xs font-bold text-[#2a2927] truncate font-outfit">
+                  Soma Frenética
+                </p>
+
+                <p className="text-[10px] text-[#7d7b77] font-figtree">
+                  Última vez ontem
+                </p>
+
+              </div>
+
+              <span className="text-[#1d4ed8] font-bold pr-2">
+                ›
+              </span>
+
+            </div>
+
+
           </div>
+
+
         </aside>
 
+
       </main>
+
     </div>
   )
 }
